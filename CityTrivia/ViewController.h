@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reachability.h"
 
 @interface ViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *resumeGame;
+@property (weak, nonatomic) IBOutlet UIButton *startGame;
+- (IBAction)infoButton:(id)sender;
 
 @end
