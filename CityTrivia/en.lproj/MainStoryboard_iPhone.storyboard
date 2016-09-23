@@ -156,31 +156,10 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxG-Ma-JA1">
-                                        <frame key="frameInset" minX="23.18%" minY="79.16%" width="53.02%" height="5.21%"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Go To City" backgroundImage="button.png">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="goToCityPressed:" destination="esD-4Q-mbJ" eventType="touchUpInside" id="cjD-yi-GrK"/>
-                                        </connections>
-                                    </button>
-                                    <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="yTI-XM-Oeu">
-                                        <frame key="frameInset" minX="49.77%" minY="97.66%" width="94" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="valueChanged:" destination="esD-4Q-mbJ" eventType="valueChanged" id="dpK-XL-vyD"/>
-                                        </connections>
-                                    </stepper>
                                     <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUI-0m-elw">
-                                        <frame key="frameInset" minX="-0.95%" minY="44.09%" width="101.59%" height="30.06%"/>
+                                        <frame key="frameInset" minX="0.0%" minY="70.14%" width="100.00%" height="30.06%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -192,9 +171,8 @@
                     <connections>
                         <outlet property="answer" destination="nqA-Ok-exr" id="NGH-nP-fIj"/>
                         <outlet property="cityLabel" destination="gx8-Va-vrI" id="oZs-NY-w7e"/>
+                        <outlet property="cityPickerView" destination="EUI-0m-elw" id="0Jd-PB-6iy"/>
                         <outlet property="evaluateQuestion" destination="hDm-JN-C00" id="NFm-dp-ypl"/>
-                        <outlet property="goToCity" destination="sxG-Ma-JA1" id="kcg-z2-oR4"/>
-                        <outlet property="stepper" destination="yTI-XM-Oeu" id="tXE-Cb-HMh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yob-wA-ofj" userLabel="First Responder" sceneMemberID="firstResponder"/>

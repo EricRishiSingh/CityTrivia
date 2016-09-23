@@ -16,10 +16,7 @@
 
 @implementation Questions
 
-@synthesize evaluateQuestion;
-@synthesize goToCity;
-@synthesize answer;
-
+@synthesize evaluateQuestion, answer, cityPickerView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,10 +61,14 @@
         }
     }
     
-    _stepper.maximumValue = _cityArray.count;
-    _stepper.minimumValue = 1;
+    //    _stepper.maximumValue = _cityArray.count;
+    //    _stepper.minimumValue = 1;
     [activityIndicator stopAnimating];
     [mask setHidden:YES];
+    
+    // Load city picker after csv file is loaded
+    [self.cityPickerView reloadAllComponents];
+    
     [self loadNextQuestion];
 }
 
@@ -81,7 +82,7 @@
     [self.view addSubview:mask];
     
     // Add background image
-    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"image1.jpg"]];
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bk.jpg"]];
     [backgroundImage setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     [self.view insertSubview:backgroundImage atIndex:0];
     
@@ -99,6 +100,10 @@
     
     // Disable autocorrect
     answer.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    // Declare delegate and dataSource
+    self.cityPickerView.delegate = self;
+    self.cityPickerView.dataSource = self;
     
     // Animate activity indicator
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -139,13 +144,15 @@
             }
         }
         
-        
         _cityLabel.text = cityNameModified;
-        _questionCount++;
         
-        _stepper.value = _questionCount;
-        [goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]] forState:UIControlStateNormal];
-        self.navigationItem.title = [@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]];
+        //_stepper.value = _questionCount;
+        //[goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]] forState:UIControlStateNormal];
+        
+        [cityPickerView selectRow:_questionCount inComponent:0 animated:YES];
+        self.navigationItem.title = [@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount + 1]];
+        
+        _questionCount++;
     }
     else
     {
@@ -195,7 +202,7 @@
                                     [self loadMap];
                                 }];
     
-    [alert addAction:[self getOkButton]];
+    [alert addAction:[self getOkButton: true]];
     [alert addAction:mapButton];
     
     [self presentViewController:alert animated:YES completion:nil];
@@ -203,11 +210,19 @@
 
 - (void)showTryAgain
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" message:@"You are incorrect. Please try again"
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:@"Incorrect"
+                                message:@"You are incorrect. Please try again"
+                                preferredStyle:UIAlertControllerStyleAlert];
     
-    alert.tag = 3;
-    [alert show];
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" message:@"You are incorrect. Please try again"
+    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+    //
+    //    alert.tag = 3;
+    //    [alert show];
+    
+    [alert addAction:[self getOkButton: false]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showHintMessage
@@ -226,18 +241,13 @@
                                        [self showAnswer];
                                    }];
     
-    UIAlertAction* okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action) {}];
-    
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Here's a Hint" message:city.firstHint
     //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Give me the Answer", nil];
     
     //    alert.tag = 4;
     //    [alert show];
     
-    [alert addAction:okButton];
+    [alert addAction:[self getOkButton: false]];
     [alert addAction:answerButton];
     
     [self presentViewController:alert animated:YES completion:nil];
@@ -246,53 +256,65 @@
 - (void)showAnswer
 {
     City *city = [_cityArray objectAtIndex:_questionCount - 1];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:city.name message:nil
-                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
-    alert.tag = 5;
-    [alert show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:nil
+                                message:city.name
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:city.name message:nil
+    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    //
+    //    alert.tag = 5;
+    //    [alert show];
+    
+    [alert addAction:[self getOkButton: true]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
--(UIAlertAction*)getOkButton
+-(UIAlertAction*)getOkButton: (Boolean) loadNextQuestion
 {
-    return [UIAlertAction
-            actionWithTitle:@"Ok"
-            style:UIAlertActionStyleDefault
-            handler:^(UIAlertAction * action) {
-                [self loadNextQuestion];
-            }];
+    UIAlertAction* action = [UIAlertAction
+                             actionWithTitle:@"Ok"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action) {
+                                 if (loadNextQuestion)
+                                     [self loadNextQuestion];
+                             }];
+    
+    return action;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // NO = 0, YES = 1
-    if(buttonIndex == 0)
-    {
-        if (alertView.tag == 1)
-        {
-            [self loadNextQuestion];
-        }
-        if (alertView.tag == 2)
-        {
-            [self loadNextQuestion];
-        }
-        if (alertView.tag == 5)
-        {
-            [self loadNextQuestion];
-        }
-    }
-    else
-    {
-        if (alertView.tag == 1)
-        {
-            [self loadNextQuestion];
-            [self loadMap];
-        }
-        if (alertView.tag == 4)
-        {
-            [self showAnswer];
-        }
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    // NO = 0, YES = 1
+//    if(buttonIndex == 0)
+//    {
+//        if (alertView.tag == 1)
+//        {
+//            [self loadNextQuestion];
+//        }
+//        if (alertView.tag == 2)
+//        {
+//            [self loadNextQuestion];
+//        }
+//        if (alertView.tag == 5)
+//        {
+//            [self loadNextQuestion];
+//        }
+//    }
+//    else
+//    {
+//        if (alertView.tag == 1)
+//        {
+//            [self loadNextQuestion];
+//            [self loadMap];
+//        }
+//        if (alertView.tag == 4)
+//        {
+//            [self showAnswer];
+//        }
+//    }
+//}
 
 - (void)loadMap
 {
@@ -302,24 +324,57 @@
     
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self evalQuestion];
-    return YES;
-}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    [self evalQuestion];
+//    return YES;
+//}
 
-- (IBAction)valueChanged:(UIStepper *)sender {
-    double value = [sender value];
-    if (value > 0 && value <= _cityArray.count)
+//- (IBAction)valueChanged:(UIStepper *)sender {
+//    double value = [sender value];
+//    if (value > 0 && value <= _cityArray.count)
+//    {
+//        [goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%.0f", value]] forState:UIControlStateNormal];
+//    }
+//}
+//
+//- (IBAction)goToCityPressed:(id)sender
+//{
+//    _questionCount = _stepper.value - 1;
+//    [self loadNextQuestion];
+//}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (row >= 0 && row <= _cityArray.count)
     {
-        [goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%.0f", value]] forState:UIControlStateNormal];
+        _questionCount = row;
+        [self loadNextQuestion];
     }
 }
 
-- (IBAction)goToCityPressed:(id)sender
+// The number of columns of data
+- (long)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    _questionCount = _stepper.value - 1;
-    [self loadNextQuestion];
+    return 1;
 }
 
+// The number of rows of data
+- (long)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return (int)_cityArray.count;
+}
+
+// The data to return for the row and component (column) that's being passed in
+//- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    return [NSString stringWithFormat:@"City %.0ld", (long)row + 1];
+//}
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *title = [NSString stringWithFormat:@"City %.0ld", (long)row + 1];
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    return attString;
+}
 
 @end

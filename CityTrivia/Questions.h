@@ -8,26 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Questions : UIViewController <UITextFieldDelegate>
+@interface Questions : UIViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 {
     UIActivityIndicatorView *activityIndicator;
     UIView *mask;
 }
 
-//@property (strong, nonatomic) NSMutableArray *images;
 @property (nonatomic) NSUInteger questionCount;
-//@property (nonatomic) NSUInteger counter;
-@property (nonatomic) NSUInteger imageCount;
 @property (nonatomic) NSMutableArray *cityArray;
 @property (nonatomic) NSString *currentCity;
 
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 @property (weak, nonatomic) IBOutlet UIButton *evaluateQuestion;
 @property (weak, nonatomic) IBOutlet UITextField *answer;
-@property (weak, nonatomic) IBOutlet UIButton *goToCity;
-@property (weak, nonatomic) IBOutlet UIStepper *stepper;
+//@property (weak, nonatomic) IBOutlet UIButton *goToCity;
+//@property (weak, nonatomic) IBOutlet UIStepper *stepper;
+@property (nonatomic, retain) IBOutlet UIPickerView *cityPickerView;
 
-- (IBAction)evaluateQuestionPressed:(id)sender;
-- (IBAction)goToCityPressed:(id)sender;
+//- (IBAction)evaluateQuestionPressed:(id)sender;
+//- (IBAction)goToCityPressed:(id)sender;
 
 @end
