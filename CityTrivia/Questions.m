@@ -16,8 +16,6 @@
 
 @implementation Questions
 
-@synthesize evaluateQuestion, answer, cityPickerView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -61,8 +59,6 @@
         }
     }
     
-    //    _stepper.maximumValue = _cityArray.count;
-    //    _stepper.minimumValue = 1;
     [activityIndicator stopAnimating];
     [mask setHidden:YES];
     
@@ -96,10 +92,10 @@
     self.navigationItem.rightBarButtonItem = hintButton;
     
     // The answer text field delegate
-    answer.delegate = self;
+    _answerTextField.delegate = self;
     
     // Disable autocorrect
-    answer.autocorrectionType = UITextAutocorrectionTypeNo;
+    _answerTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
     // Declare delegate and dataSource
     self.cityPickerView.delegate = self;
@@ -121,11 +117,19 @@
     }
 }
 
+- (IBAction)nextQuestionPressed:(id)sender {
+    [self loadNextQuestion];
+}
+
 - (void)loadNextQuestion
 {
     if (_cityArray != nil && _questionCount < _cityArray.count)
     {
-        [answer setText:@""];
+        [_answerTextField setText:@""];
+        [_nextQuestionButton setEnabled:NO];
+        [_factButton setEnabled:NO];
+        [_evaluateQuestionButton setEnabled:YES];
+        [_factTextField setText:@""];
         
         City *city = [_cityArray objectAtIndex:_questionCount];
         NSString *cityName = city.name;
@@ -146,10 +150,7 @@
         
         _cityLabel.text = cityNameModified;
         
-        //_stepper.value = _questionCount;
-        //[goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]] forState:UIControlStateNormal];
-        
-        [cityPickerView selectRow:_questionCount inComponent:0 animated:YES];
+        [_cityPickerView selectRow:_questionCount inComponent:0 animated:YES];
         self.navigationItem.title = [@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount + 1]];
         
         _questionCount++;
@@ -161,6 +162,11 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self evalQuestion];
+    return YES;
+}
 
 - (IBAction)evaluateQuestionPressed:(id)sender
 {
@@ -169,43 +175,19 @@
 
 - (void)evalQuestion
 {
-    [answer resignFirstResponder];
-    NSString *result = [[answer text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    [_answerTextField resignFirstResponder];
+    NSString *result = [[_answerTextField text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     City *city = [_cityArray objectAtIndex:_questionCount - 1];
     NSString *expectedResult = city.name;
     
     if ([result caseInsensitiveCompare:expectedResult] == NSOrderedSame)
     {
-        [self showFact];
+        [self showAnswer];
     }
     else
     {
         [self showTryAgain];
     }
-}
-
-- (void)showFact
-{
-    City *city = [_cityArray objectAtIndex:_questionCount - 1];
-    _currentCity = city.name;
-    
-    UIAlertController *alert = [UIAlertController
-                                alertControllerWithTitle:city.name
-                                message:city.fact
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* mapButton = [UIAlertAction
-                                actionWithTitle:@"Show City on Map"
-                                style:UIAlertActionStyleDefault
-                                handler:^(UIAlertAction * action) {
-                                    [self loadNextQuestion];
-                                    [self loadMap];
-                                }];
-    
-    [alert addAction:[self getOkButton: true]];
-    [alert addAction:mapButton];
-    
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showTryAgain
@@ -214,12 +196,6 @@
                                 alertControllerWithTitle:@"Incorrect"
                                 message:@"You are incorrect. Please try again"
                                 preferredStyle:UIAlertControllerStyleAlert];
-    
-    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" message:@"You are incorrect. Please try again"
-    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
-    //
-    //    alert.tag = 3;
-    //    [alert show];
     
     [alert addAction:[self getOkButton: false]];
     [self presentViewController:alert animated:YES completion:nil];
@@ -241,12 +217,6 @@
                                        [self showAnswer];
                                    }];
     
-    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Here's a Hint" message:city.firstHint
-    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Give me the Answer", nil];
-    
-    //    alert.tag = 4;
-    //    [alert show];
-    
     [alert addAction:[self getOkButton: false]];
     [alert addAction:answerButton];
     
@@ -256,20 +226,12 @@
 - (void)showAnswer
 {
     City *city = [_cityArray objectAtIndex:_questionCount - 1];
-    
-    UIAlertController *alert = [UIAlertController
-                                alertControllerWithTitle:nil
-                                message:city.name
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:city.name message:nil
-    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    //
-    //    alert.tag = 5;
-    //    [alert show];
-    
-    [alert addAction:[self getOkButton: true]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [_cityLabel setText:city.name];
+    [_factTextField setText:city.fact];
+    [_nextQuestionButton setEnabled:YES];
+    [_factButton setEnabled:YES];
+    [_evaluateQuestionButton setEnabled:NO];
+    _currentCity = city.name;
 }
 
 -(UIAlertAction*)getOkButton: (Boolean) loadNextQuestion
@@ -285,63 +247,12 @@
     return action;
 }
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    // NO = 0, YES = 1
-//    if(buttonIndex == 0)
-//    {
-//        if (alertView.tag == 1)
-//        {
-//            [self loadNextQuestion];
-//        }
-//        if (alertView.tag == 2)
-//        {
-//            [self loadNextQuestion];
-//        }
-//        if (alertView.tag == 5)
-//        {
-//            [self loadNextQuestion];
-//        }
-//    }
-//    else
-//    {
-//        if (alertView.tag == 1)
-//        {
-//            [self loadNextQuestion];
-//            [self loadMap];
-//        }
-//        if (alertView.tag == 4)
-//        {
-//            [self showAnswer];
-//        }
-//    }
-//}
-
-- (void)loadMap
-{
+- (IBAction)loadMap:(id)sender {
     CityMapViewController *view = [self.storyboard instantiateViewControllerWithIdentifier:@"CityMapView"];
     view.cityName = _currentCity;
     [self.navigationController pushViewController:view animated:YES];
-    
 }
 
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    [self evalQuestion];
-//    return YES;
-//}
-
-//- (IBAction)valueChanged:(UIStepper *)sender {
-//    double value = [sender value];
-//    if (value > 0 && value <= _cityArray.count)
-//    {
-//        [goToCity setTitle:[@"Go to City " stringByAppendingString:[NSString stringWithFormat:@"%.0f", value]] forState:UIControlStateNormal];
-//    }
-//}
-//
-//- (IBAction)goToCityPressed:(id)sender
-//{
-//    _questionCount = _stepper.value - 1;
-//    [self loadNextQuestion];
-//}
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -353,22 +264,16 @@
 }
 
 // The number of columns of data
-- (long)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
 // The number of rows of data
-- (long)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return (int)_cityArray.count;
 }
-
-// The data to return for the row and component (column) that's being passed in
-//- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//    return [NSString stringWithFormat:@"City %.0ld", (long)row + 1];
-//}
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {

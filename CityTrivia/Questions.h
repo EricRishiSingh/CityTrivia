@@ -19,11 +19,15 @@
 @property (nonatomic) NSString *currentCity;
 
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
-@property (weak, nonatomic) IBOutlet UIButton *evaluateQuestion;
-@property (weak, nonatomic) IBOutlet UITextField *answer;
+@property (weak, nonatomic) IBOutlet UIButton *evaluateQuestionButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextQuestionButton;
+@property (weak, nonatomic) IBOutlet UITextField *answerTextField;
 //@property (weak, nonatomic) IBOutlet UIButton *goToCity;
 //@property (weak, nonatomic) IBOutlet UIStepper *stepper;
 @property (nonatomic, retain) IBOutlet UIPickerView *cityPickerView;
+@property (weak, nonatomic) IBOutlet UITextView *factTextField;
+@property (weak, nonatomic) IBOutlet UIButton *factButton;
+
 
 //- (IBAction)evaluateQuestionPressed:(id)sender;
 //- (IBAction)goToCityPressed:(id)sender;

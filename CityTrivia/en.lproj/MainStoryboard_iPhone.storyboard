@@ -125,11 +125,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O6z-k7-32N">
-                                <frame key="frameInset" minX="30" minY="100" maxX="30" maxY="68"/>
+                                <frame key="frameInset" minX="30" minY="85" maxX="30" maxY="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDm-JN-C00">
-                                        <frame key="frameInset" minX="10.16%" minY="7.42%" width="79.05%" height="7.01%"/>
+                                        <frame key="frameInset" minX="10.16%" minY="26.55%" width="79.37%" height="6.90%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Am I Correct?" backgroundImage="button.png">
@@ -143,24 +143,62 @@
                                             <action selector="evaluateQuestionPressed:" destination="esD-4Q-mbJ" eventType="touchUpInside" id="5uv-VE-dZ8"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXA-Ub-vM7">
+                                        <frame key="frameInset" minX="10.48%" minY="35.40%" width="38.09%" height="7.08%"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Next" backgroundImage="button.png">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="nextQuestionPressed:" destination="esD-4Q-mbJ" eventType="touchUpInside" id="7cv-Xk-Ah2"/>
+                                        </connections>
+                                    </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nqA-Ok-exr">
-                                        <frame key="frameInset" minX="10.48%" minY="37.74%" width="79.05%" height="30"/>
+                                        <frame key="frameInset" minX="10.48%" minY="18.69%" width="79.05%" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx8-Va-vrI" userLabel="CityLettersLabel">
-                                        <frame key="frameInset" minX="0.0%" minY="22.45%" width="100.00%" height="8.02%"/>
+                                        <frame key="frameInset" minX="0.0%" minY="4.96%" width="100.00%" height="8.14%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Medium" family="Apple SD Gothic Neo" pointSize="30"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EUI-0m-elw">
-                                        <frame key="frameInset" minX="0.0%" minY="70.14%" width="100.00%" height="30.06%"/>
+                                        <frame key="frameInset" minX="0.0%" minY="77.88%" width="100.00%" height="22.12%"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </pickerView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGr-xD-5gA">
+                                        <frame key="frameInset" minX="11.75%" minY="47.79%" width="76.19%" height="25.66%"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8T-Yg-eBJ">
+                                        <frame key="frameInset" minX="51.75%" minY="35.40%" width="38.09%" height="7.08%"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Map" backgroundImage="button.png">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadMap:" destination="esD-4Q-mbJ" eventType="touchUpInside" id="cEE-jm-xEq"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -169,10 +207,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="ESH-gP-ljZ"/>
                     <connections>
-                        <outlet property="answer" destination="nqA-Ok-exr" id="NGH-nP-fIj"/>
+                        <outlet property="answerTextField" destination="nqA-Ok-exr" id="aHu-w4-clj"/>
                         <outlet property="cityLabel" destination="gx8-Va-vrI" id="oZs-NY-w7e"/>
                         <outlet property="cityPickerView" destination="EUI-0m-elw" id="0Jd-PB-6iy"/>
-                        <outlet property="evaluateQuestion" destination="hDm-JN-C00" id="NFm-dp-ypl"/>
+                        <outlet property="evaluateQuestionButton" destination="hDm-JN-C00" id="0eR-Vl-XBS"/>
+                        <outlet property="factButton" destination="S8T-Yg-eBJ" id="SHj-ES-c26"/>
+                        <outlet property="factTextField" destination="iGr-xD-5gA" id="31h-Ox-vte"/>
+                        <outlet property="nextQuestionButton" destination="lXA-Ub-vM7" id="Zfk-Pr-fzF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yob-wA-ofj" userLabel="First Responder" sceneMemberID="firstResponder"/>
