@@ -3,7 +3,7 @@
 //  CityTrivia
 //
 //  Created by Eric Singh on 2013-06-26.
-//  Copyright (c) 2013 Eric Singh. All rights reserved.
+//  Copyright (c) 2016 Eric Singh. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -27,12 +27,15 @@
     [self.view insertSubview:backgroundView atIndex:0];
     
     // Navigation bar colour
-    //self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.00];
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    [bar setBarStyle:UIBarStyleBlack];
+    [bar setTintColor:[UIColor colorWithRed:100 green:100 blue:100 alpha:1.0]];
+    
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)evaluateResumeButtonEnabled
 {
-    NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
+  NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
     if (cachedValue > 0)
     {
         _resumeGame.enabled = YES;
@@ -43,24 +46,25 @@
         _resumeGame.enabled = NO;
         _resumeGame.alpha = 0.5;
     }
-    
-    //[self checkInternetConnection];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //[super viewDidAppear:<#animated#>];
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:reachability];
+    [reachability startNotifier];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)startGamePressed:(id)sender
-{
-    [self performSegueWithIdentifier:@"startGame" sender:self];
-}
-
-- (void)resumeGamePressed:(id)sender
-{
-    [self performSegueWithIdentifier:@"resumeGame" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -79,31 +83,23 @@
     }
 }
 
-- (void)checkInternetConnection
-{
-    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-    if (networkStatus == NotReachable)
-    {
+- (void)reachabilityDidChange:(NSNotification *)notification {
+    Reachability *reachability = (Reachability *)[notification object];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    NSLog(@"Current Network Status: %ld", networkStatus);
+    if (networkStatus == NotReachable) {
+        [self.connectionLabel setText:@"Network connection must be enabled"];
         _startGame.enabled = NO;
         _startGame.alpha = 0.5;
-        [self showInternetConnectionError];
+        _resumeGame.enabled = NO;
+        _resumeGame.alpha = 0.5;
+    } else {
+        [self.connectionLabel setText:@""];
+        _startGame.enabled = YES;
+        _startGame.alpha = 1;
+        [self evaluateResumeButtonEnabled];
     }
-}
-
-- (void)showInternetConnectionError
-{
-    UIAlertController *alert = [UIAlertController
-                                alertControllerWithTitle:@"Error"
-                                message:@"Please verify network connection is active"
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please verify network connection is active"
-    //                                                   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    
-    // [alert show];
-    
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (IBAction)infoButton:(id)sender
@@ -116,9 +112,9 @@
                                 preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* okButton = [UIAlertAction
-                       actionWithTitle:@"Ok"
-                       style:UIAlertActionStyleDefault
-                       handler:^(UIAlertAction * action) {}];
+                               actionWithTitle:@"Ok"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {}];
     
     [alert addAction:okButton];
     [self presentViewController:alert animated:YES completion:nil];

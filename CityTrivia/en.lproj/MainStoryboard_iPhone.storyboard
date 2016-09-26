@@ -78,6 +78,13 @@
                                             <action selector="infoButton:" destination="2" eventType="touchUpInside" id="cTD-ph-tWk"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ke-GD-0VJ">
+                                        <frame key="frameInset" minX="12.31%" minY="40.28%" width="75.39%" height="13.43%"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -86,6 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="CdG-7u-2Qc"/>
                     <connections>
+                        <outlet property="connectionLabel" destination="6ke-GD-0VJ" id="jVD-4e-oha"/>
                         <outlet property="resumeGame" destination="lxu-4M-7lS" id="8hI-Dh-wuV"/>
                         <outlet property="startGame" destination="Lvf-bx-awD" id="7SF-1x-V72"/>
                     </connections>

@@ -3,7 +3,7 @@
 //  CityTrivia
 //
 //  Created by Eric Singh on 2013-06-26.
-//  Copyright (c) 2013 Eric Singh. All rights reserved.
+//  Copyright (c) 2016 Eric Singh. All rights reserved.
 //
 
 #import "Questions.h"
@@ -15,15 +15,6 @@
 @end
 
 @implementation Questions
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -218,8 +209,7 @@
                                    }];
     
     [alert addAction:[self getOkButton: false]];
-    [alert addAction:answerButton];
-    
+    [alert addAction:answerButton];    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
