@@ -3,7 +3,7 @@
 //  CityTrivia
 //
 //  Created by Eric Singh on 2013-06-26.
-//  Copyright (c) 2013 Eric Singh. All rights reserved.
+//  Copyright (c) 2016 Eric Singh. All rights reserved.
 //
 
 #import "AppDelegate.h"

@@ -30,33 +30,54 @@
     NSURL *url = [NSURL URLWithString:absoluteURL];
     NSString *fileString = [[NSString alloc] initWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&error];
     
-    NSMutableArray *citiesFromCsv = (NSMutableArray*)[fileString componentsSeparatedByString:@"\r"];
-    
-    _cityArray = [NSMutableArray new];
-    _cityArray = [[NSMutableArray alloc] initWithCapacity:citiesFromCsv.count];
-    
-    for(id city in citiesFromCsv)
+    // Handle error
+    if (error)
     {
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Error"
+                                    message:@"Cannot load questions. Please contact: support@ericsingh.com"
+                                    preferredStyle:UIAlertControllerStyleAlert];
         
-        NSArray *cityObjects = [city componentsSeparatedByString:@","];
+        UIAlertAction* okButton = [UIAlertAction
+                                   actionWithTitle:@"Ok"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {}];
         
-        if (cityObjects.count == 3)
-        {
-            City *newCity = [[City alloc] init];
-            newCity.name = [cityObjects objectAtIndex:0];
-            newCity.fact = [cityObjects objectAtIndex:1];
-            newCity.firstHint = [cityObjects objectAtIndex:2];
-            [_cityArray addObject:newCity];
-        }
+        [alert addAction:okButton];
+        [self presentViewController:alert animated:YES completion:nil];
+        [activityIndicator stopAnimating];
+        [self.navigationItem setRightBarButtonItem:nil];
     }
-    
-    [activityIndicator stopAnimating];
-    [mask setHidden:YES];
-    
-    // Load city picker after csv file is loaded
-    [self.cityPickerView reloadAllComponents];
-    
-    [self loadNextQuestion];
+    else
+    {
+        NSMutableArray *citiesFromCsv = (NSMutableArray*)[fileString componentsSeparatedByString:@"\r"];
+        
+        _cityArray = [NSMutableArray new];
+        _cityArray = [[NSMutableArray alloc] initWithCapacity:citiesFromCsv.count];
+        
+        for(id city in citiesFromCsv)
+        {
+            
+            NSArray *cityObjects = [city componentsSeparatedByString:@","];
+            
+            if (cityObjects.count == 3)
+            {
+                City *newCity = [[City alloc] init];
+                newCity.name = [cityObjects objectAtIndex:0];
+                newCity.fact = [cityObjects objectAtIndex:1];
+                newCity.firstHint = [cityObjects objectAtIndex:2];
+                [_cityArray addObject:newCity];
+            }
+        }
+        
+        [activityIndicator stopAnimating];
+        [mask setHidden:YES];
+        
+        // Load city picker after csv file is loaded
+        [self.cityPickerView reloadAllComponents];
+        
+        [self loadNextQuestion];
+    }
 }
 
 - (void)viewDidLoad
@@ -80,7 +101,7 @@
                                    target:self
                                    action:@selector(showHintMessage)];
     
-    self.navigationItem.rightBarButtonItem = hintButton;
+    [self.navigationItem setRightBarButtonItem:hintButton];
     
     // The answer text field delegate
     _answerTextField.delegate = self;
@@ -98,6 +119,12 @@
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
     [self performSelector:@selector(getCsvData) withObject:nil afterDelay:0];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self setTitle:[@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -142,9 +169,8 @@
         _cityLabel.text = cityNameModified;
         
         [_cityPickerView selectRow:_questionCount inComponent:0 animated:YES];
-        self.navigationItem.title = [@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount + 1]];
-        
         _questionCount++;
+        [self setTitle:[@"City " stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)_questionCount]]];
     }
     else
     {
@@ -209,7 +235,7 @@
                                    }];
     
     [alert addAction:[self getOkButton: false]];
-    [alert addAction:answerButton];    
+    [alert addAction:answerButton];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

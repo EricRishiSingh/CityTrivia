@@ -35,7 +35,7 @@
 
 - (void)evaluateResumeButtonEnabled
 {
-  NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
+    NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
     if (cachedValue > 0)
     {
         _resumeGame.enabled = YES;
@@ -50,15 +50,44 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //[super viewDidAppear:<#animated#>];
-    Reachability *reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:reachability];
-    [reachability startNotifier];
+    [super viewDidAppear:YES];
+    
+    // Allocate a reachability object
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.ericsingh.com"];
+    
+    // Set the blocks
+    reach.reachableBlock = ^(Reachability*reach)
+    {
+        // Update the UI on the main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"REACHABLE!");
+            [self.connectionLabel setText:@""];
+            _startGame.enabled = YES;
+            _startGame.alpha = 1;
+            [self evaluateResumeButtonEnabled];
+        });
+    };
+    
+    reach.unreachableBlock = ^(Reachability*reach)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"UNREACHABLE!");
+            [self.connectionLabel setText:@"Network connection must be enabled"];
+            _startGame.enabled = NO;
+            _startGame.alpha = 0.5;
+            _resumeGame.enabled = NO;
+            _resumeGame.alpha = 0.5;
+        });
+    };
+    
+    // Start the notifier, which will cause the reachability object to retain itself!
+    [reach startNotifier];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:YES];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,25 +109,6 @@
         Questions *dest = [segue destinationViewController];
         NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
         dest.questionCount = cachedValue;
-    }
-}
-
-- (void)reachabilityDidChange:(NSNotification *)notification {
-    Reachability *reachability = (Reachability *)[notification object];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    
-    NSLog(@"Current Network Status: %ld", networkStatus);
-    if (networkStatus == NotReachable) {
-        [self.connectionLabel setText:@"Network connection must be enabled"];
-        _startGame.enabled = NO;
-        _startGame.alpha = 0.5;
-        _resumeGame.enabled = NO;
-        _resumeGame.alpha = 0.5;
-    } else {
-        [self.connectionLabel setText:@""];
-        _startGame.enabled = YES;
-        _startGame.alpha = 1;
-        [self evaluateResumeButtonEnabled];
     }
 }
 

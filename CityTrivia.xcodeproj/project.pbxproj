@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		420800001780E3A50062F732 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4208FFFF1780E3A50062F732 /* CoreLocation.framework */; };
-		4208000917812C730062F732 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4208000817812C730062F732 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4208000917812C730062F732 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4208000817812C730062F732 /* Reachability.m */; };
 		4208000B17812D8D0062F732 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4208000A17812D8D0062F732 /* SystemConfiguration.framework */; };
 		42080015178154D40062F732 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 42080014178154D40062F732 /* button.png */; };
 		4208003917866B150062F732 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4208003817866B150062F732 /* icon114.png */; };
@@ -210,6 +210,12 @@
 			attributes = {
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Eric Singh";
+				TargetAttributes = {
+					4208FFA1177BDEA80062F732 = {
+						DevelopmentTeam = N27BY8H326;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 4208FF9D177BDEA80062F732 /* Build configuration list for PBXProject "CityTrivia" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -383,7 +389,8 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CityTrivia/CityTrivia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N27BY8H326;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CityTrivia/CityTrivia-Prefix.pch";
 				INFOPLIST_FILE = "CityTrivia/CityTrivia-Info.plist";
@@ -401,7 +408,8 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CityTrivia/CityTrivia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N27BY8H326;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CityTrivia/CityTrivia-Prefix.pch";
 				INFOPLIST_FILE = "CityTrivia/CityTrivia-Info.plist";

@@ -21,6 +21,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:YES];
     mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:mapView];
     
