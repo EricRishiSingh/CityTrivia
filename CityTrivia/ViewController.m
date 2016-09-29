@@ -114,7 +114,7 @@
 
 - (IBAction)infoButton:(id)sender
 {
-    NSString *instructions = @"- Press the \"New Game\" button to start a new game. After the first city has been loaded you can start.\n\n-To play, you have to guess the missing characters (replaced with underscores). Type the full name in the text box and either press return or the \"Am I Correct\" button.\n\n-If you are having difficulty guessing the city, use the \"Hint\" button at the top right. The hint message has the option to reveal the answer.\n\n-Once a city is guessed correctly, an interesting fact is shown and you have the option to view the city on the map.\n\n-Use the \"Go to City\" and stepper buttons to skip cities (levels).";
+    NSString *instructions = @"- Press the \"New Game\" button to start a new game. After the first city has been loaded you can start.\n\n-To play, you have to guess the missing characters (replaced with underscores). Type the full name in the text box and either press return or the \"Am I Correct\" button.\n\n-If you are having difficulty guessing the city, use the \"Hint\" button at the top right. The hint message has the option to reveal the answer.\n\n-Once a city is guessed correctly, an interesting fact is shown and you have the option to view the city on the map.\n\n-Use the picker to skip cities or move to a specific one.";
     
     UIAlertController *alert = [UIAlertController
                                 alertControllerWithTitle:@"Instructions"
