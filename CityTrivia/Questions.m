@@ -26,7 +26,7 @@
 {
     // Get csv data
     NSError *error = nil;
-    NSString *absoluteURL = @"http://www.ericsingh.com/citytriviaV2.0/citytrivia.csv";
+    NSString *absoluteURL = @"http://www.intelligentdreams.ca/citytriviaV2.0/citytrivia.csv";
     NSURL *url = [NSURL URLWithString:absoluteURL];
     NSString *fileString = [[NSString alloc] initWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&error];
     
