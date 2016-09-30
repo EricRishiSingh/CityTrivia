@@ -25,10 +25,7 @@
 		4208FFEA177E8EB70062F732 /* bk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4208FFE9177E8EB70062F732 /* bk.jpg */; };
 		4208FFFC1780D0F80062F732 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4208FFFB1780D0F80062F732 /* CityMapViewController.m */; };
 		4208FFFE1780E1880062F732 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4208FFFD1780E1880062F732 /* MapKit.framework */; };
-		428A13581D9B6F9600C02044 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 428A13571D9B6F9600C02044 /* Default-568h@2x.png */; };
 		428A13761D9CBF0900C02044 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428A13751D9CBF0900C02044 /* Images.xcassets */; };
-		428A13781D9CC64200C02044 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 428A13771D9CC64200C02044 /* icons */; };
-		428A137A1D9CCB7D00C02044 /* lauchImages in Resources */ = {isa = PBXBuildFile; fileRef = 428A13791D9CCB7D00C02044 /* lauchImages */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,10 +58,7 @@
 		4208FFFB1780D0F80062F732 /* CityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityMapViewController.m; sourceTree = "<group>"; };
 		4208FFFD1780E1880062F732 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4208FFFF1780E3A50062F732 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		428A13571D9B6F9600C02044 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		428A13751D9CBF0900C02044 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		428A13771D9CC64200C02044 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
-		428A13791D9CCB7D00C02044 /* lauchImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lauchImages; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +81,6 @@
 		4208FF99177BDEA80062F732 = {
 			isa = PBXGroup;
 			children = (
-				428A13571D9B6F9600C02044 /* Default-568h@2x.png */,
 				4208FFAB177BDEA80062F732 /* CityTrivia */,
 				4208FFA4177BDEA80062F732 /* Frameworks */,
 				4208FFA3177BDEA80062F732 /* Products */,
@@ -142,8 +135,6 @@
 		4208FFAC177BDEA80062F732 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				428A13791D9CCB7D00C02044 /* lauchImages */,
-				428A13771D9CC64200C02044 /* icons */,
 				42080014178154D40062F732 /* button.png */,
 				4208FFE9177E8EB70062F732 /* bk.jpg */,
 				4208FFAD177BDEA80062F732 /* CityTrivia-Info.plist */,
@@ -213,13 +204,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428A137A1D9CCB7D00C02044 /* lauchImages in Resources */,
 				4208FFB0177BDEA80062F732 /* InfoPlist.strings in Resources */,
-				428A13781D9CC64200C02044 /* icons in Resources */,
 				4208FFB8177BDEA80062F732 /* Default.png in Resources */,
 				4208FFBF177BDEA80062F732 /* MainStoryboard_iPhone.storyboard in Resources */,
 				4208FFEA177E8EB70062F732 /* bk.jpg in Resources */,
-				428A13581D9B6F9600C02044 /* Default-568h@2x.png in Resources */,
 				42080015178154D40062F732 /* button.png in Resources */,
 				428A13761D9CBF0900C02044 /* Images.xcassets in Resources */,
 			);
