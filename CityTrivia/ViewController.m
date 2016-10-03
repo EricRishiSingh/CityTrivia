@@ -21,8 +21,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     // Background image
-    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bk.jpg"]];
-    [backgroundView setFrame:CGRectMake(0, 0, 320, 480)];
+    UIImageView *backgroundView = [[UIImageView alloc]
+                                   initWithImage:[UIImage imageNamed:@"bk.jpg"]];
     [backgroundView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     [self.view insertSubview:backgroundView atIndex:0];
     
@@ -39,12 +39,12 @@
                                    action:@selector(showInfo)];
     
     [self.navigationItem setRightBarButtonItem:infoButton];
-    
 }
 
 - (void)evaluateResumeButtonEnabled
 {
-    NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
+    NSInteger cachedValue = [[NSUserDefaults standardUserDefaults]
+                             integerForKey:@"questionCount"];
     if (cachedValue > 0)
     {
         _resumeGame.enabled = YES;
@@ -62,14 +62,13 @@
     [super viewDidAppear:YES];
     
     // Allocate a reachability object
-    Reachability* reach = [Reachability reachabilityWithHostname:@"www.ericsingh.com"];
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.intelligentdreams.ca"];
     
     // Set the blocks
     reach.reachableBlock = ^(Reachability*reach)
     {
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"REACHABLE!");
             [self.connectionLabel setText:@""];
             _startGame.enabled = YES;
             _startGame.alpha = 1;
@@ -80,7 +79,6 @@
     reach.unreachableBlock = ^(Reachability*reach)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"UNREACHABLE!");
             [self.connectionLabel setText:@"Network connection must be enabled"];
             _startGame.enabled = NO;
             _startGame.alpha = 0.5;
@@ -91,12 +89,6 @@
     
     // Start the notifier, which will cause the reachability object to retain itself!
     [reach startNotifier];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:YES];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,7 +108,8 @@
     if ([[segue identifier] isEqualToString:@"resumeGame"])
     {
         Questions *dest = [segue destinationViewController];
-        NSInteger cachedValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"questionCount"];
+        NSInteger cachedValue = [[NSUserDefaults standardUserDefaults]
+                                 integerForKey:@"questionCount"];
         dest.questionCount = cachedValue;
     }
 }

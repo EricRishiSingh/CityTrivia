@@ -28,7 +28,9 @@
     NSError *error = nil;
     NSString *absoluteURL = @"http://www.intelligentdreams.ca/citytriviaV2.0/citytrivia.csv";
     NSURL *url = [NSURL URLWithString:absoluteURL];
-    NSString *fileString = [[NSString alloc] initWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&error];
+    NSString *fileString = [[NSString alloc]
+                            initWithContentsOfURL:url
+                            encoding:NSASCIIStringEncoding error:&error];
     
     // Handle error
     if (error)
@@ -90,7 +92,8 @@
     [self.view addSubview:mask];
     
     // Add background image
-    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bk.jpg"]];
+    UIImageView *backgroundImage = [[UIImageView alloc]
+                                    initWithImage:[UIImage imageNamed:@"bk.jpg"]];
     [backgroundImage setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     [self.view insertSubview:backgroundImage atIndex:0];
     
@@ -114,7 +117,8 @@
     self.cityPickerView.dataSource = self;
     
     // Animate activity indicator
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator = [[UIActivityIndicatorView alloc]
+                         initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activityIndicator.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds)/2);
     [self.view addSubview:activityIndicator];
     [activityIndicator startAnimating];
@@ -193,7 +197,8 @@
 - (void)evalQuestion
 {
     [_answerTextField resignFirstResponder];
-    NSString *result = [[_answerTextField text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *result = [[_answerTextField text]
+                        stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     City *city = [_cityArray objectAtIndex:_questionCount - 1];
     NSString *expectedResult = city.name;
     
@@ -294,7 +299,9 @@
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *title = [NSString stringWithFormat:@"City %.0ld", (long)row + 1];
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    NSAttributedString *attString = [[NSAttributedString alloc]
+                                     initWithString:title
+                                     attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     return attString;
 }
 
