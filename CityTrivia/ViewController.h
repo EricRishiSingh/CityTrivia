@@ -13,7 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeGame;
 @property (weak, nonatomic) IBOutlet UIButton *startGame;
-- (IBAction)infoButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *connectionLabel;
 
 @end
